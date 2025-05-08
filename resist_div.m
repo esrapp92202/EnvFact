@@ -1,19 +1,14 @@
-%% Analysis: Resource Supply
+%% Analysis: Resistance by Diversity with Supply Curves (Figure 4b)
 
 % import experimental data as "rawdata" (exp01)
 
-%data = rawdata;
-%data = rawdata(rawdata.l == 0.8,:);
-%data = data(data.Sparsity == 0.2,:);
-
+data = rawdata;
 res_total = struct();
 
 for i = [3 6 9 12 15 18]
-
     data = rawdata(rawdata.SK == i,:);
     env_data = ResistanceAnalysis(data);
     res_total.('K'+string(i)) = env_data.RES([1 2 3 5 7 10]);
-
 end
 
 ENVPlot(res_total)
