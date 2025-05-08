@@ -1,10 +1,8 @@
 %% Analysis: Richness
 
-% import experimental data as "rawdata" (exp01CS)
+% import experimental data as "rawdata" (exp01)
 
-
-% RES
-%{
+% Figure 2a: resistance outcomes
 data = rawdata;
 env_data = zeros(13,3);
 
@@ -12,7 +10,8 @@ for i = 1:13
     [bmean,minCI,maxCI] = CI(data(data.RICH == i,:),100,'RES');
     env_data(i,:) = [bmean,minCI,maxCI];
 end
-%}
+
+figure(1)
 
 LineErrorPlot(env_data,'RES')
 
@@ -26,8 +25,7 @@ annotation(gcf,'textbox',...
         'FitBoxToText','off');
 
 
-% AUG, DISP, DISR
-%{
+% Figure 2b: other outcomes
 data = rawdata;
 aug_data = zeros(13,3);
 disp_data = zeros(13,3);
@@ -41,11 +39,9 @@ for i = 1:13
     disp_data(i,:) = [disp_bmean,disp_minCI,disp_maxCI];
     disr_data(i,:) = [disr_bmean,disr_minCI,disr_maxCI];
 end
-%}
 
+figure(2)
 
-% Other Outcomes
-%{
 augline = LineErrorPlot(aug_data,'AUG');
 displine = LineErrorPlot(disp_data,'DISP');
 disrline = LineErrorPlot(disr_data,'DISR');
@@ -53,9 +49,6 @@ disrline = LineErrorPlot(disr_data,'DISR');
 legend1 = legend([augline displine disrline],'Augment', 'Displace', 'Disrupt');
 set(legend1,'Interpreter','latex','FontSize',16,'Location','northwest');
 title(legend1,'Outcome');
-%}
-
-
 
 
 
@@ -108,8 +101,6 @@ function l = LineErrorPlot(data,out)
         {'1','3','5','7','9','11','13'},'YTickLabel',...
         {'0\%','20\%','40\%','60\%','80\%','100\%'});
 
-    %title('Richness-Resistance Curve','FontSize',30,...
-    %    'FontName','EB Garamond');
     xlabel({'Initial Community Richness'},'FontSize',24,...
         'FontName','EB Garamond');
     ylabel({'Resistance Outcomes'},'FontSize',24,'FontName','EB Garamond');
