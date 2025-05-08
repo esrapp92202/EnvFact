@@ -2,6 +2,7 @@
 
 % import experimental data as "rawdata" (exp01)
 
+data = rawdata;
 res_total = struct();
 
 for i = [3 6 9 12 15 18]
