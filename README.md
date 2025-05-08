@@ -14,4 +14,5 @@ Analysis files
  - richres_div.m -> analyze exp01 data for richness-resistance curves (Fig 3a)
  - resist_sup.m  -> analyze exp01 data for resistance (Fig 4a)
  - resist_div.m  -> analyze exp01 data for resistance (Fig 4b)
+ - disruption.m  -> analyze exp01 data for low-rank disruption (Fig S1)
  - propagule.m   -> analyze exp02 data for propagule size (Fig S4)
