@@ -2,10 +2,8 @@
 
 % import experimental data as "rawdata" (exp01)
 
-
 %% GENERATE BOOTSTRAPS
 
-%{
 %% Resource limited
 data = rawdata(rawdata.SK == 6,:);
 mean_limited = sum(data.OUTCOME == 'RES')/length(data.COM);
@@ -85,7 +83,7 @@ resource_diverse = [ls1,ls2,ls3;...
     hs1,hs2,hs3;...
     hd1,hd2,hd3];
 
-%}
+
 
 %% Plots (all data)
 
