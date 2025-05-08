@@ -1,4 +1,4 @@
-%% EXP03: Generate communities, invade with different propagule size
+%% EXP2: Generate communities, invade with varying propagule size
 
 assumptions0 = struct('M', 18, ...Number of resources
     'muc', 10, ...Sum of consumption rates
@@ -8,7 +8,7 @@ assumptions0 = struct('M', 18, ...Number of resources
     'supply','external', ...resource supply (see dRdt)
     'tau',ones(1,18), ...
     'w',ones(1,18),...
-    'sparsity',1,...
+    'spread',1,...
     'l',0.8*ones(1,18)...
     );
 
@@ -28,18 +28,19 @@ parfor i = 1:N*length(propagule_sizes)
 
     import RappBase.*
 
-    ENVarray = [1 2 3 5 7 10];
+    ENVarray = [1 2 3 5 7 10]; % Diversity domain
+    SKarray = [3 6 9 12 15 18]; % Supply domain
 
     %% Assumption Parameters
     assumptions = assumptions0;
-    ENV =      ENVarray(randi(length(ENVarray))); % 1,2,3,5,7,10
-    SK =       3*randi([1,6]); % 3 or 6 or 9 or 12 or 15 or 18
+    ENV =      ENVarray(randi(length(ENVarray))); % Pick diversity
+    SK =       SKarray(randi(length(SKarray))); % Pick supply
     S = 50;
 
     assumptions.ENV = ENV;
     assumptions.SK = SK;
 
-    PropSize = 0.1; % propagule_sizes(ceil(i/N));
+    PropSize = propagule_sizes(ceil(i/N));
     Comm = RappBase.GenerateCommunity(assumptions,S,ENV);
     RICHi = sum(Comm.N>0);
 
