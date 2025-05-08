@@ -1,11 +1,8 @@
-%% Extinction threshold analysis
+%% Analysis: Extinction Threshold (Figure S2)
 
 %data = rawdata;
-data = rawdata(rawdata.EXT_REL == 0,:);
-data = data(1:100000,:);
 
-%{
-EXT_THRESarray = [10^-6 10^-5.5 10^-5 10^-4.5 10^-4 10^-3.5 10^-3 10^-2.5 10^-2];
+EXT_THRESarray = [10^-6 10^-5.5 10^-5 10^-4.5 10^-4 10^-3.5 10^-3 10^-2.5 10^-2]; % Extinction threshold domain
 
 aug = zeros(6,3);
 displ= zeros(6,3);
@@ -24,15 +21,12 @@ for i = 1:length(EXT_THRESarray)
     disr(i,:) = [disr_bmean,disr_minCI,disr_maxCI];
     res(i,:) = [res_bmean,res_minCI,res_maxCI];
 end
-%}
 
 figure(1)
 augline = LineErrorPlot(EXT_THRESarray,aug,'AUG');
 displine = LineErrorPlot(EXT_THRESarray,displ,'DISP');
 disrline = LineErrorPlot(EXT_THRESarray,disr,'DISR');
 resline = LineErrorPlot(EXT_THRESarray,res,'RES');
-
-
 
 
 function [bmean,minCI,maxCI] = CI(data,nboot,out)
