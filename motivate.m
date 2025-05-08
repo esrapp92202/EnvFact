@@ -1,4 +1,4 @@
-%% Analysis: Richness
+%% Analysis: Motivate Richness-Resistance Curves (Figure 2)
 
 % import experimental data as "rawdata" (exp01)
 
