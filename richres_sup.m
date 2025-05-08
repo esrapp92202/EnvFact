@@ -1,36 +1,17 @@
-%% Analysis: Richness
+%% Analysis: Richness-Resistance by Resource Supply (Figure 3b)
 
 % import experimental data as "rawdata" (exp01)
 
-% refine data with parameter ranges
-%data = rawdata;
-%data = rawdata(rawdata.ENV == 2,:);
-%data = data(1:100000,:);
-%data = data(data.l == 0.8,:);
-%data = data(data.SK >= 6,:);
-%data = rawdata;
-
-%DisrFix(data,0.05);
-
-
 res_total = struct();
 
-
 for i = [3 6 9 12 15 18]
-
     data = rawdata(rawdata.SK == i,:);
-
     sk_data = RichnessAnalysis(data);
-    res_total.('K'+string(i)) = sk_data.RES;
-
+    res_total.('K'+string(i)) = sk_data.RES(sk_data.N >= 100); % minimum sample size
 end
 
 SKPlot(res_total)
-
-
-xlim([1 17])
 ylim([0 1])
-
 
 function summary_data = RichnessAnalysis(data)
 
