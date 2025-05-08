@@ -7,38 +7,39 @@ assumptions0 = struct('M', 18, ...Number of resources
     'response','typeI', ...functional response (see dRdt)
     'supply','external', ...resource supply (see dRdt)
     'tau',ones(1,18), ...
-    'w',ones(1,18),...
-    'l',0.8*ones(1,18),...
-    'spread',1, ...
-    'Dthres',0.05, ...
-    'ext_rel',false, ...
-    'ext_thres',0.001);
+    'w',ones(1,18),...energy content per resource
+    'l',0.8*ones(1,18),...leakage fraction per resource
+    'spread',1, ...metabolic byproduct spread
+    'Dthres',0.05, ...minimum nonzero value of metabolic matrix
+    'ext_rel',false, ...absolute or relative extinction threshold
+    'ext_thres',0.001 ...extinction threshold);
 
 
-N = 10;
+N = 2000000; % number of communities/invasions
 exp_info = table('Size',[N 12], ...
     'VariableTypes',{'double','double','double','double','double','double','double','double',  'categorical', 'double','double','cell'},...
     'VariableNames',{'COM',   'LOAD',  'ENV',   'S0',     'RICH',  'SK',    'l',    'Spread',  'OUTCOME',     'LOADf', 'RICHf', 'EXTRANK' });
-%{
+
 c = parcluster('Processes');
 c.NumWorkers = 40;
 saveProfile(c);
 addAttachedFiles(gcp,'RappBase.m')
-%}
+
 for i = 1:N
 
     import RappBase.*
 
     %% Assumption Parameters
 
-    ENVarray = [1 2 3 5 7 10];
+    ENVarray = [1 2 3 5 7 10]; % Diversity domain
+    SKarray = [3 6 9 12 15 18]; % Supply domain
 
     assumptions = assumptions0;
 
     % COMMUNITY VARIABLES
-    ENV =      ENVarray(randi(length(ENVarray))); % 1,2,3,5,7,10
-    SK =       3*randi([1,6]); % 3 or 6 or 9 or 12 or 15 or 18
-    S0 = randi([5,50]); % [5,50]
+    ENV =      ENVarray(randi(length(ENVarray))); % Pick diversity
+    SK =       SKarray(randi(length(SKarray))); % Pick supply
+    S0 = randi([5,50]); % Pick S0 from 5 to 50 species
 
     assumptions.ENV = ENV;
     assumptions.SK = SK;
@@ -49,7 +50,6 @@ for i = 1:N
     disp("Community "+string(i)+" generated")
 
     LOAD = sum(Comm.N);
-    ENV = sum(Comm.R0>0);
     RICH = sum(Comm.N>0);
 
     results = InvasionAnalysis(Comm);
@@ -57,7 +57,7 @@ for i = 1:N
 
 end
 
-%save('2M_exp01_S5-50', 'exp_info', '-v7.3')
+save('2M_exp01_S5-50', 'exp_info', '-v7.3')
 
 %% INVASION
 
