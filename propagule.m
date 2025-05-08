@@ -1,30 +1,16 @@
-%% Analysis: Invader Propagule Size
+%% Analysis: Invader Propagule Size (Figure S4)
 
-% import experimental data as "rawdata" (exp03)
-data = rawdata(randsample(1000000,200000),:);
-
+% import experimental data as "rawdata" (exp02)
+data = rawdata;
 
 PropSizes = unique(data.PROPSIZE);
 
-% True distribution
-%{
-results = zeros(length(PropSizes),2);
-results(:,1) = PropSizes;
-
-for i = 1:length(PropSizes)
-    data_prop = data(data.PROPSIZE == PropSizes(i),:);
-    results(i,2) = length(data_prop(data_prop.OUTCOME == 'RES',:).COM)/length(data_prop.COM);
-end
-%}
-
 % Bootstrap sampling
-%{
 bs_results = [PropSizes zeros(length(PropSizes),3)];
 for i = 1:length(PropSizes)
     [bmean,minCI,maxCI] = CI(data(data.PROPSIZE == PropSizes(i),:),100);
     bs_results(i,2:4) = [bmean,minCI,maxCI];
 end
-%}
 
 LineErrorPlot(bs_results(:,1),bs_results(:,2:4))
 
