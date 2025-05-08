@@ -1,4 +1,4 @@
-%% EXP2: Generate communities, invade with varying propagule size
+%% EXP02: Generate communities, invade with varying propagule size
 
 assumptions0 = struct('M', 18, ...Number of resources
     'muc', 10, ...Sum of consumption rates
