@@ -1,18 +1,17 @@
-%% Disruption Analysis 
+%% Analysis: Low-Rank Disruption (Figure S1)
 
-% import experimental data as "rawdata" (exp01 S/D)
+% import experimental data as "rawdata" (exp01)
 
 data = rawdata;
 maxrich = max(data.RICH);
 disr_perc_array = zeros(1,maxrich);
 thres = 0.2;
 
-% Supply analysis
-%{
+% Supply Analysis: constant diversity, varying supply
+
 results = NaN(6,maxrich);
 
 for j = [3 6 9 12 15 18]
-
     MaxExt = zeros(maxrich,2);
     data = rawdata(rawdata.SK == j,:);
 
@@ -30,10 +29,10 @@ for j = [3 6 9 12 15 18]
 end
 
 SKPlot(results)
-%}
 
 
-% Diversity analysis
+
+% Diversity analysis: constant supply, varying diversity
 
 results = NaN(10,maxrich);
 
@@ -55,7 +54,7 @@ for j = [1 2 3 5 7 10]
 end
 
 ENVPlot(results)
-%}
+
 
 
 hold on
