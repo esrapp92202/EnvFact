@@ -1,33 +1,16 @@
-%% Analysis: Richness
+%% Analysis: Richness-Resistance by Resource Diversity (Figure 3a)
 
 % import experimental data as "rawdata" (exp01)
 
-% refine data with parameter ranges
-%data = rawdata;
-%data = rawdata(rawdata.ENV == 2,:);
-%data = data(1:100000,:);
-%data = data(data.l == 0.8,:);
-%data = data(data.SK >= 6,:);
-%data = rawdata;
-
-%DisrFix(data,0.05);
-
-
 res_total = struct();
 
-
 for i = [1 2 3 5 7 10]
-
     data = rawdata(rawdata.ENV == i,:);
-
     env_data = RichnessAnalysis(data);
-    res_total.('E'+string(i)) = env_data.RES(env_data.N >= 100);
-
+    res_total.('E'+string(i)) = env_data.RES(env_data.N >= 100); % minimum sample size
 end
 
 EnvPlot(res_total)
-
-
 ylim([0 1])
 
 
@@ -50,18 +33,6 @@ function summary_data = RichnessAnalysis(data)
             sum(rich_sort.('R'+string(i)).RICHf)/length(rich_sort.('R'+string(i)).COM),...
             sum(rich_sort.('R'+string(i)).OUTCOME == 'RES') / length(rich_sort.('R'+string(i)).COM)};
     end
-end
-
-function DisrFix(data,thres) % Change outcome from disrupt to resist if displaced species fall below rank threshold
-    
-    for i = 1:length(data.COM)
-        EXTRANK = cell2mat(data(i,:).EXTRANK);
-        if sum(EXTRANK) ~= 0 && sum(1-(EXTRANK / data(i,:).RICH) > thres) == 0
-            data(i,:).OUTCOME = 'RES';
-            disp(data(i,:).COM)
-        end
-    end
-
 end
 
 function EnvPlot(data_struct)
