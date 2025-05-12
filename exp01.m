@@ -25,7 +25,7 @@ c.NumWorkers = 40;
 saveProfile(c);
 addAttachedFiles(gcp,'RappBase.m')
 
-for i = 1:N
+parfor i = 1:N
 
     import RappBase.*
 
