@@ -12,7 +12,7 @@ assumptions0 = struct('M', 18, ...Number of resources
     'spread',1, ...metabolic byproduct spread
     'Dthres',0.05, ...minimum nonzero value of metabolic matrix
     'ext_rel',false, ...absolute or relative extinction threshold
-    'ext_thres',0.001 ...extinction threshold);
+    'ext_thres',0.001); ...extinction threshold
 
 
 N = 2000000; % number of communities/invasions
